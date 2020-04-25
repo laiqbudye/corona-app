@@ -7,7 +7,7 @@ import moment from 'moment';
 import cx from 'classnames';   // this is to apply two or more classes to div
 
 const Cards = ({ data }) => {
-    console.log(data)
+
     if(!data.confirmed){
         return null
     }

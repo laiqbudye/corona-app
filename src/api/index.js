@@ -11,3 +11,13 @@ export const fetchData= async () => {
         console.log(error);
     }
 }
+
+export const fetchDailyData= async () => {
+    try {
+        const { data } = await axios.get(`${url}/daily`);   // destructuring data field only from response
+
+        return data;        
+    } catch (error) {
+        console.log(error);
+    }
+}
