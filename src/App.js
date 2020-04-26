@@ -1,40 +1,52 @@
-import React from 'react';
+import React,{Fragment} from 'react';
 import styles from './App.module.css';
 import Cards from './components/Cards/Cards';
 import Chart from './components/Chart/Chart';
 import CountryPicker from './components/CountryPicker/CountryPicker';
-import { fetchData } from './api/index';
+import { fetchData, fetchCountries } from './api/index';
 import coronaImage from './image/image.png'
+import Map from './components/Map/Map';
 
 class App extends React.Component {
   state = {
     data: {},
-    country: ''
+    countries: [],
+    country: '',
+    errorWhileFetching: false
   }
 
 
   async componentDidMount(){  // we can write aync in fron of this function as this is already async function
     const fetchedData = await fetchData();
-
-    this.setState({data: fetchedData})
+    const fetchedCountries = await fetchCountries();
+    this.setState({data: fetchedData});
+    this.setState({countries: fetchedCountries});
   }
 
   handleCountryChange = async( country ) => {
+    console.log(country)
     const fetchedData = await fetchData(country);
 
-    this.setState({data: fetchedData, country: country})  
+    this.setState({data: fetchedData, country: country, errorWhileFetching: fetchedData ? false : true})  
   }
 
 
 
   render() {
     return (
+      <Fragment>
       <div className={styles.container}>
         <img className={styles.image} src={coronaImage} />
         <Cards data={this.state.data}/>             {/* sending fetched data to cards component usning props*/}
-        <CountryPicker handleCountryChange={this.handleCountryChange} />
+        <CountryPicker countries={this.state.countries} handleCountryChange={this.handleCountryChange} />
         <Chart data={this.state.data} country={this.state.country}/>
       </div>
+        <Map
+          data={this.state.data}
+          handleCountryChange={this.handleCountryChange}
+          errorWhileFetching={this.state.errorWhileFetching}
+        />
+      </Fragment>
     )
   };
 }

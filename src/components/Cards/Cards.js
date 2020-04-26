@@ -8,35 +8,33 @@ import cx from 'classnames';   // this is to apply two or more classes to div
 
 const Cards = ({ data }) => {
 
-    if(!data.confirmed){
-        return null
-    }
     return (
+        data.total_cases >= 0 ?
         <div className={styles.container}>
             <Grid container spacing={3} justify='center'>
-                <Grid item component={Card} xs={12} md={3} className={cx(styles.card, styles.infected)}>
+                <Grid item component={Card} xs={12} md={2} className={cx(styles.card, styles.infected)}>
                     <CardContent>
                         <Typography color='textSecondary' gutterBottom>
-                            Infected
+                            Total Cases
                         </Typography>
                         <Typography variant='h5'>
                             <CountUp 
                                 start = {0}
-                                end = {data.confirmed.value}
+                                end = {data.total_cases}
                                 separator = ','
                                 duration = {2.1}  // seconds
                             />    
                         </Typography>
                         <Typography color='textSecondary'>
-                            LastUpdate: <Moment format='DD/MM/YYYY hh:mm A'>{moment.utc(data.lastUpdate).local()}</Moment>
+                            LastUpdate: <Moment format='DD/MM/YYYY hh:mm A'>{moment.utc(Date.now()).local()}</Moment>
                         </Typography>
                         <Typography variant='body2'>
-                            Number of active cases of COVID-19
+                            Total number of cases of COVID-19
                         </Typography>
                     </CardContent>
                 </Grid>
 
-                <Grid item component={Card} xs={12} md={3} className={cx(styles.card, styles.recovered)}>
+                <Grid item component={Card} xs={12} md={2} className={cx(styles.card, styles.recovered)}>
                     <CardContent>
                         <Typography color='textSecondary' gutterBottom>
                             Recovered
@@ -44,13 +42,13 @@ const Cards = ({ data }) => {
                         <Typography variant='h5'>
                             <CountUp 
                                 start = {0}
-                                end = {data.recovered.value}
+                                end = {data.total_recovered}
                                 separator = ','
                                 duration = {2.1}  // seconds
                             />        
                         </Typography>
                         <Typography color='textSecondary'>
-                            LastUpdate: <Moment format='DD/MM/YYYY hh:mm A'>{moment.utc(data.lastUpdate).local()}</Moment>
+                            LastUpdate: <Moment format='DD/MM/YYYY hh:mm A'>{moment.utc(Date.now()).local()}</Moment>
                         </Typography>
                         <Typography variant='body2'>
                             Number of recoveries from COVID-19
@@ -58,7 +56,7 @@ const Cards = ({ data }) => {
                     </CardContent>
                 </Grid>
 
-                <Grid item component={Card} xs={12} md={3} className={cx(styles.card, styles.deaths)}>
+                <Grid item component={Card} xs={12} md={2} className={cx(styles.card, styles.deaths)}>
                     <CardContent>
                         <Typography color='textSecondary' gutterBottom>
                             Deaths
@@ -66,21 +64,43 @@ const Cards = ({ data }) => {
                         <Typography variant='h5'>
                             <CountUp 
                                 start = {0}
-                                end = {data.deaths.value}
+                                end = {data.total_deaths}
                                 separator = ','
                                 duration = {2.1}  // seconds
                             />      
                         </Typography>
                         <Typography color='textSecondary'>
-                            LastUpdate: <Moment format='DD/MM/YYYY hh:mm A'>{moment.utc(data.lastUpdate).local()}</Moment>
+                            LastUpdate: <Moment format='DD/MM/YYYY hh:mm A'>{moment.utc(Date.now()).local()}</Moment>
                         </Typography>
                         <Typography variant='body2'>
                             Number of deaths caused by COVID-19
                         </Typography>
                     </CardContent>
                 </Grid>
+
+                <Grid item component={Card} xs={12} md={2} className={cx(styles.card, styles.active)}>
+                    <CardContent>
+                        <Typography color='textSecondary' gutterBottom>
+                            Active Cases
+                        </Typography>
+                        <Typography variant='h5'>
+                            <CountUp 
+                                start = {0}
+                                end = {data.total_active_cases}
+                                separator = ','
+                                duration = {2.1}  // seconds
+                            />      
+                        </Typography>
+                        <Typography color='textSecondary'>
+                            LastUpdate: <Moment format='DD/MM/YYYY hh:mm A'>{moment.utc(Date.now()).local()}</Moment>
+                        </Typography>
+                        <Typography variant='body2'>
+                            Number of active cases of COVID-19
+                        </Typography>
+                    </CardContent>
+                </Grid>
             </Grid>
-        </div>
+        </div> : null
     )
 }
 
