@@ -15,7 +15,7 @@ const Cards = ({ data }) => {
                 <Grid item component={Card} xs={12} md={2} className={cx(styles.card, styles.infected)}>
                     <CardContent>
                         <Typography color='textSecondary' gutterBottom>
-                            Total Cases
+                            <i class="fas fa-clinic-medical"></i> {' '}Total Cases
                         </Typography>
                         <Typography variant='h5'>
                             <CountUp 
@@ -37,7 +37,7 @@ const Cards = ({ data }) => {
                 <Grid item component={Card} xs={12} md={2} className={cx(styles.card, styles.recovered)}>
                     <CardContent>
                         <Typography color='textSecondary' gutterBottom>
-                            Recovered
+                            <i class="fas fa-hospital-user"></i>{' '}Recovered
                         </Typography>
                         <Typography variant='h5'>
                             <CountUp 
@@ -59,7 +59,7 @@ const Cards = ({ data }) => {
                 <Grid item component={Card} xs={12} md={2} className={cx(styles.card, styles.deaths)}>
                     <CardContent>
                         <Typography color='textSecondary' gutterBottom>
-                            Deaths
+                        <i class="fas fa-skull-crossbones"></i>{' '}Deaths
                         </Typography>
                         <Typography variant='h5'>
                             <CountUp 
@@ -81,7 +81,7 @@ const Cards = ({ data }) => {
                 <Grid item component={Card} xs={12} md={2} className={cx(styles.card, styles.active)}>
                     <CardContent>
                         <Typography color='textSecondary' gutterBottom>
-                            Active Cases
+                            <i class="fas fa-procedures"></i>{' '}Active Cases
                         </Typography>
                         <Typography variant='h5'>
                             <CountUp 
