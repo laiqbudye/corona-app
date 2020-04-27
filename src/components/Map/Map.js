@@ -30,14 +30,14 @@ const Map = ({ handleCountryChange, countries, errorWhileFetching }) => {
               {new Intl.NumberFormat('en-IN').format(content?.total_cases)}
             </span>
             <span>
-              <i class="fas fa-skull-crossbones"></i>{' '}
-              <strong>Total Deaths: </strong>
-              {new Intl.NumberFormat('en-IN').format(content?.total_deaths)}
-            </span>
-            <span>
               <i class="fas fa-hospital-user"></i>
               <strong>Total Recovered: </strong>
               {new Intl.NumberFormat('en-IN').format(content?.total_recovered)}
+            </span>
+            <span>
+              <i class="fas fa-skull-crossbones"></i>{' '}
+              <strong>Total Deaths: </strong>
+              {new Intl.NumberFormat('en-IN').format(content?.total_deaths)}
             </span>
             <span>
               <i class="fas fa-procedures"></i>
