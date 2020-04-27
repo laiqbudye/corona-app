@@ -23,11 +23,15 @@ class App extends React.Component {
     this.setState({countries: fetchedCountries});
   }
 
-  handleCountryChange = async( country ) => {
-    console.log(country)
-    const fetchedData = await fetchData(country);
+  handleCountryChange = async( countrycode ) => {
 
-    this.setState({data: fetchedData, country: country, errorWhileFetching: fetchedData ? false : true})  
+    if(countrycode === 'global'){
+       const fetchedData = await fetchData();
+       this.setState({data: fetchedData})
+    }else{
+      const fetchedData = this.state.countries.filter(country => country.code === countrycode)
+      this.setState({data: fetchedData[0]})  
+    }
   }
 
 
@@ -42,7 +46,7 @@ class App extends React.Component {
         <Chart data={this.state.data} country={this.state.country}/>
       </div>
         <Map
-          data={this.state.data}
+          countries={this.state.countries}
           handleCountryChange={this.handleCountryChange}
           errorWhileFetching={this.state.errorWhileFetching}
         />

@@ -3,17 +3,8 @@ import axios from 'axios';
 const url = "https://covid19.mathdro.id/api" // api to fetch global covid data
 const newUrl = "https://api.thevirustracker.com"
 
-export const fetchData= async (countrycode) => {
+export const fetchData= async () => {
 
-    if (countrycode) { 
-        try {
-            const {data}  = await axios.get(`${newUrl}/free-api?countryTotal=${countrycode}`);
-            
-            return data.countrydata[0];
-        } catch (error) {
-            console.log(error);
-        }
-    }else{
     try {
         const { data } = await axios.get(`${newUrl}/free-api?global=stats`);   // destructuring data field only from response
 
@@ -21,7 +12,6 @@ export const fetchData= async (countrycode) => {
     } catch (error) {
         console.log(error);
     }
-}
 }
 
 export const fetchDailyData= async () => {
