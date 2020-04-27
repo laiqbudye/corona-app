@@ -1,4 +1,5 @@
 import React from 'react'
+import Spinner from '../Spinner/Spinner';
 import { Card, CardContent, Typography, Grid } from '@material-ui/core';
 import styles from './Cards.module.css';
 import CountUp from 'react-countup';
@@ -9,7 +10,6 @@ import cx from 'classnames';   // this is to apply two or more classes to div
 const Cards = ({ data }) => {
 
     return (
-        data?.total_cases >= 0 ?
         <div className={styles.container}>
             <Grid container spacing={3} justify='center'>
                 <Grid item component={Card} xs={12} md={2} className={cx(styles.card, styles.infected)}>
@@ -18,12 +18,13 @@ const Cards = ({ data }) => {
                             <i class="fas fa-clinic-medical"></i> {' '}Total Cases
                         </Typography>
                         <Typography variant='h5'>
-                            <CountUp 
-                                start = {0}
-                                end = {data.total_cases}
-                                separator = ','
-                                duration = {2.1}  // seconds
-                            />    
+                            {data?.total_cases ?
+                                <CountUp
+                                    start={0}
+                                    end={data.total_cases}
+                                    separator=','
+                                    duration={2.1}  // seconds
+                                /> : <Spinner /> }  
                         </Typography>
                         <Typography color='textSecondary'>
                             LastUpdate: <Moment format='DD/MM/YYYY hh:mm A'>{moment.utc(Date.now()).local()}</Moment>
@@ -40,12 +41,13 @@ const Cards = ({ data }) => {
                             <i class="fas fa-hospital-user"></i>{' '}Recovered
                         </Typography>
                         <Typography variant='h5'>
+                        {data?.total_recovered ?
                             <CountUp 
                                 start = {0}
                                 end = {data.total_recovered}
                                 separator = ','
                                 duration = {2.1}  // seconds
-                            />        
+                            /> : <Spinner /> }         
                         </Typography>
                         <Typography color='textSecondary'>
                             LastUpdate: <Moment format='DD/MM/YYYY hh:mm A'>{moment.utc(Date.now()).local()}</Moment>
@@ -62,12 +64,13 @@ const Cards = ({ data }) => {
                         <i class="fas fa-skull-crossbones"></i>{' '}Deaths
                         </Typography>
                         <Typography variant='h5'>
+                        {data?.total_deaths ?
                             <CountUp 
                                 start = {0}
                                 end = {data.total_deaths}
                                 separator = ','
                                 duration = {2.1}  // seconds
-                            />      
+                            /> : <Spinner /> }       
                         </Typography>
                         <Typography color='textSecondary'>
                             LastUpdate: <Moment format='DD/MM/YYYY hh:mm A'>{moment.utc(Date.now()).local()}</Moment>
@@ -84,12 +87,13 @@ const Cards = ({ data }) => {
                             <i class="fas fa-procedures"></i>{' '}Active Cases
                         </Typography>
                         <Typography variant='h5'>
+                        {data?.total_active_cases ?
                             <CountUp 
                                 start = {0}
                                 end = {data.total_active_cases}
                                 separator = ','
                                 duration = {2.1}  // seconds
-                            />      
+                            /> : <Spinner /> }        
                         </Typography>
                         <Typography color='textSecondary'>
                             LastUpdate: <Moment format='DD/MM/YYYY hh:mm A'>{moment.utc(Date.now()).local()}</Moment>
@@ -100,7 +104,7 @@ const Cards = ({ data }) => {
                     </CardContent>
                 </Grid>
             </Grid>
-        </div> : null
+        </div>
     )
 }
 
