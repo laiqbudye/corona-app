@@ -9,7 +9,7 @@ import cx from 'classnames';   // this is to apply two or more classes to div
 const Cards = ({ data }) => {
 
     return (
-        data.total_cases >= 0 ?
+        data?.total_cases >= 0 ?
         <div className={styles.container}>
             <Grid container spacing={3} justify='center'>
                 <Grid item component={Card} xs={12} md={2} className={cx(styles.card, styles.infected)}>
