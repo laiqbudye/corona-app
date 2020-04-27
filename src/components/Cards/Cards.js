@@ -15,13 +15,13 @@ const Cards = ({ data }) => {
                 <Grid item component={Card} xs={12} md={2} className={cx(styles.card, styles.infected)}>
                     <CardContent>
                         <Typography color='textSecondary' gutterBottom>
-                            <i class="fas fa-clinic-medical"></i> {' '}Total Cases
+                            <i style={{color: "rgba(0,0,255,0.5)", width: '25px'}} class="fas fa-clinic-medical"></i> {' '}Total Cases
                         </Typography>
                         <Typography variant='h5'>
-                            {data?.total_cases ?
+                            {data?.total_cases >= 0 ?
                                 <CountUp
                                     start={0}
-                                    end={data.total_cases}
+                                    end={data.total_cases ? data.total_cases : 0}
                                     separator=','
                                     duration={2.1}  // seconds
                                 /> : <Spinner /> }  
@@ -38,13 +38,13 @@ const Cards = ({ data }) => {
                 <Grid item component={Card} xs={12} md={2} className={cx(styles.card, styles.recovered)}>
                     <CardContent>
                         <Typography color='textSecondary' gutterBottom>
-                            <i class="fas fa-hospital-user"></i>{' '}Recovered
+                            <i style={{color: "rgba(0,255,0,0.5)", width: '25px'}} class="fas fa-hospital-user"></i>{' '}Recovered
                         </Typography>
                         <Typography variant='h5'>
-                        {data?.total_recovered ?
+                        {data?.total_recovered >= 0 ?
                             <CountUp 
                                 start = {0}
-                                end = {data.total_recovered}
+                                end = {data.total_recovered ? data.total_recovered : 0}
                                 separator = ','
                                 duration = {2.1}  // seconds
                             /> : <Spinner /> }         
@@ -61,13 +61,13 @@ const Cards = ({ data }) => {
                 <Grid item component={Card} xs={12} md={2} className={cx(styles.card, styles.deaths)}>
                     <CardContent>
                         <Typography color='textSecondary' gutterBottom>
-                        <i class="fas fa-skull-crossbones"></i>{' '}Deaths
+                        <i style={{color: "rgba(255,0,0.5)", width: '25px'}} class="fas fa-skull-crossbones"></i>{' '}Deaths
                         </Typography>
                         <Typography variant='h5'>
-                        {data?.total_deaths ?
+                        {data?.total_deaths >= 0 ?
                             <CountUp 
                                 start = {0}
-                                end = {data.total_deaths}
+                                end = {data.total_deaths ? data.total_deaths : 0}
                                 separator = ','
                                 duration = {2.1}  // seconds
                             /> : <Spinner /> }       
@@ -84,13 +84,13 @@ const Cards = ({ data }) => {
                 <Grid item component={Card} xs={12} md={2} className={cx(styles.card, styles.active)}>
                     <CardContent>
                         <Typography color='textSecondary' gutterBottom>
-                            <i class="fas fa-procedures"></i>{' '}Active Cases
+                            <i style={{color: "rgba(239,255,0,0.5)", width: '25px'}} class="fas fa-procedures"></i>{' '}Active Cases
                         </Typography>
                         <Typography variant='h5'>
-                        {data?.total_active_cases ?
+                        {data?.total_active_cases >= 0 ?
                             <CountUp 
                                 start = {0}
-                                end = {data.total_active_cases}
+                                end = {data.total_active_cases ? data.total_active_cases : 0}
                                 separator = ','
                                 duration = {2.1}  // seconds
                             /> : <Spinner /> }        
