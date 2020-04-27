@@ -1,0 +1,45 @@
+svg {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+.mapcontainer{
+  width: 80%;
+  margin: auto;
+  border: 2px solid black;
+  background-color: black;
+}
+
+.tooltipcontainer{
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+}
+
+.image{
+  display: flex;
+  align-items: center;
+}
+
+.image img{
+  height: 40px;
+  margin-right: 20px;
+}
+
+.image h2{
+  text-align: center;
+  font-size: 2rem;
+}
+
+.tooltipcontainer span{
+  margin-top: 10px;
+  font-size: 1.4rem;
+}
+
+.tooltipcontainer span:first-of-type{
+  margin-top: 0;
+}
+
+.tooltipcontainer span i{
+  margin-right: 10px;
+}
