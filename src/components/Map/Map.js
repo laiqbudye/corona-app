@@ -25,22 +25,22 @@ const Map = ({ handleCountryChange, countries, errorWhileFetching }) => {
               <h2>{content.title}</h2>
             </div>
             <span>
-            <i style={{color: "rgba(0,0,255,0.5)", width: '25px'}} class="fas fa-clinic-medical"></i>
+            <i style={{color: "rgba(0,0,255,0.5)", width: '25px'}} className="fas fa-clinic-medical"></i>
               <strong>Total Cases: </strong>
               {new Intl.NumberFormat('en-IN').format(content?.total_cases)}
             </span>
             <span>
-              <i style={{color: "rgba(0,255,0,0.5)", width: '25px'}} class="fas fa-hospital-user"></i>
+              <i style={{color: "rgba(0,255,0,0.5)", width: '25px'}} className="fas fa-hospital-user"></i>
               <strong>Total Recovered: </strong>
               {new Intl.NumberFormat('en-IN').format(content?.total_recovered)}
             </span>
             <span>
-              <i style={{color: "rgba(255,0,0.5)", width: '25px'}} class="fas fa-skull-crossbones"></i>
+              <i style={{color: "rgba(255,0,0.5)", width: '25px'}} className="fas fa-skull-crossbones"></i>
               <strong>Total Deaths: </strong>
               {new Intl.NumberFormat('en-IN').format(content?.total_deaths)}
             </span>
             <span>
-              <i style={{color: "rgba(239,255,0,0.5)", width: '25px'}} class="fas fa-procedures"></i>
+              <i style={{color: "rgba(239,255,0,0.5)", width: '25px'}} className="fas fa-procedures"></i>
               <strong>Total Active: </strong>
               {new Intl.NumberFormat('en-IN').format(content?.total_active_cases)}
             </span>

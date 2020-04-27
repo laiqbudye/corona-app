@@ -26,6 +26,7 @@ const MapChart = ({ setTooltipContent, handleCountryChange, countries, errorWhil
                 <Geography
                   key={geo.rsmKey}
                   geography={geo}
+                  onClick={() => console.log(geo.properties.ISO_A2)}
                   onMouseEnter={() => {
                     const { ISO_A2 } = geo.properties;
                     handleCountryChange(ISO_A2);

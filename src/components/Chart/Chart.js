@@ -52,7 +52,7 @@ const Chart = ({ data, country }) => {
                     fill: true
                 }]
             }}
-        /> : <i class="fas fa-spinner fa-spin fa-fw fa-5x"></i> 
+        /> : <i className="fas fa-spinner fa-spin fa-fw fa-5x"></i> 
     );
 
 
