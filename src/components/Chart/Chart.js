@@ -15,19 +15,22 @@ const Chart = ({ data, country }) => {
     },[])
 
     const barChart = (
-        data ?.total_cases >= 0 ?
+        data ?.total_cases >= 0 || data?.confirmed >= 0 ?
             <Bar 
                 data={{   // two braces, one for using JS code in JSX and second for object
                     labels: ['Total Cases', 'Recovered', 'Deaths', 'Active Cases'],
                     datasets: [{
-                        data: [data.total_cases, data.total_recovered, data.total_deaths, data.total_active_cases],
+                        data: [data.total_cases ? data.total_cases : data.confirmed, 
+                               data.total_recovered ? data.total_recovered : data.recovered, 
+                               data.total_deaths ? data.total_deaths : data.deaths, 
+                               data.total_active_cases ? data.total_active_cases : data.active],
                         label: 'People',
                         backgroundColor: ['rgba(0,0,255,0.5)', 'rgba(0,255,0,0.5)', 'rgba(255,0,0,0.5)', 'rgba(239,255,0,0.5)']
                     }]
                 }}
                 options={{
                     legend: {display: false},
-                    title: {display: true, text: `Current status of ${data?.title}`}
+                    title: {display: true, text: `Current status of ${data?.title ? data.title : data.state}`}
                 }}
             /> : null
            
@@ -58,7 +61,7 @@ const Chart = ({ data, country }) => {
 
     return (
         <div className={styles.container}>
-            {data?.title ? barChart : lineChart}
+            {data?.title || data?.confirmed ? barChart : lineChart}
         </div>
     )
 }

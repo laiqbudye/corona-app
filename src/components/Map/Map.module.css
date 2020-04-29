@@ -4,8 +4,8 @@ svg {
   }
 
 .mapcontainer{
-  width: 80%;
-  margin: auto;
+  width: 75%;
+  margin: 20px auto;
   border: 2px solid black;
   background-color: black;
 }

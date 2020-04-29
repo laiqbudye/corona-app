@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React, { memo, useState } from "react";
 import {
   ZoomableGroup,
   ComposableMap,
@@ -6,19 +6,38 @@ import {
   Geography
 } from "react-simple-maps";
 
-const geoUrl =
+  // let geoUrl = showIndia ? "https://www.covid19india.org/maps/india.json" :
+  // "https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json";
+
+const MapChart = ({ setTooltipContent, handleCountryChange, countries, stateswisedata, errorWhileFetching  }) => {
+  const [showIndia, setShowIndia] = useState("");
+  
+  let geoUrl = showIndia ? "https://www.covid19india.org/maps/india.json" :
   "https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json";
 
-const MapChart = ({ setTooltipContent, handleCountryChange, countries, errorWhileFetching }) => {
-
-  function getData(countrycode) {
+  function getData(countrycode, statename) {
+    if(countrycode){
     const data = countries.filter((country) => country.code === countrycode);
     return data[0];
+    }
+    if(statename){
+    const data = stateswisedata.filter(state => state.state === statename)
+    return data[0];
+    }
+  }
+
+   const handleButtonClick = () => {
+    setShowIndia(false);
   }
 
   return (
     <>
-      <ComposableMap data-tip="" projectionConfig={{ scale: 200 }}>
+      {showIndia ? 
+        <button style={{height: '30px', width: '60px', borderRadius: '5px'}} 
+          onClick={handleButtonClick} type="button">Back
+        </button> : null
+      }
+      <ComposableMap data-tip="" projectionConfig={showIndia ? {rotate: [-80.0, -23.0, 0], scale: 800 } : {scale: 200}}>
         <ZoomableGroup>
           <Geographies geography={geoUrl}>
             {({ geographies }) =>
@@ -26,11 +45,15 @@ const MapChart = ({ setTooltipContent, handleCountryChange, countries, errorWhil
                 <Geography
                   key={geo.rsmKey}
                   geography={geo}
-                  onClick={() => console.log(geo.properties.ISO_A2)}
+                  onClick={() => {
+                    if(geo.properties.ISO_A2 === 'IN'){
+                      setShowIndia(true);
+                    }
+                  }}
                   onMouseEnter={() => {
-                    const { ISO_A2 } = geo.properties;
-                    handleCountryChange(ISO_A2);
-                    setTooltipContent(getData(ISO_A2));
+                    const { ISO_A2, st_nm } = geo.properties;
+                    handleCountryChange(ISO_A2, st_nm);
+                    setTooltipContent(getData(ISO_A2, st_nm));
                   }}
                   onMouseLeave={() => {
                     setTooltipContent("");
