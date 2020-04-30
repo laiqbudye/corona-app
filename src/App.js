@@ -67,6 +67,7 @@ class App extends React.Component {
         <img className={styles.image} src={coronaImage} />
         <Cards data={this.state.data}/>             {/* sending fetched data to cards component usning props*/}
         <CountryPicker countries={this.state.countries} handleCountryChange={this.handleCountryChange} />
+        <div className={styles.wrapper}>
         <Chart data={this.state.data} country={this.state.country}/>
       
         <Map
@@ -76,6 +77,7 @@ class App extends React.Component {
           handleCountryChange={this.handleCountryChange}
           errorWhileFetching={this.state.errorWhileFetching}
         />
+        </div>
         </div>
       </Fragment>
     )

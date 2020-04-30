@@ -4,10 +4,7 @@ svg {
   }
 
 .mapcontainer{
-  width: 75%;
-  margin: 20px auto;
-  border: 2px solid black;
-  background-color: black;
+  width: 50%;
 }
 
 .tooltipcontainer{
@@ -42,4 +39,11 @@ svg {
 
 .tooltipcontainer span i{
   margin-right: 10px;
+}
+
+@media screen and (orientation: portrait){
+  .mapcontainer{
+    width: 100%;
+    margin-top: 20px;
+  }
 }

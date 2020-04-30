@@ -15,12 +15,26 @@ body{
     margin-top: 25px;
 }
 
+.wrapper{
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    width: 90%;
+}
+
 @media (max-width: 750px){
     .container{
         margin: 0 10%;
     }
 
     .image{
+        width: 100%;
+    }
+}
+
+@media screen and (orientation: portrait){
+    .wrapper{
+        display: block;
         width: 100%;
     }
 }

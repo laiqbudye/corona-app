@@ -1,11 +1,19 @@
 .container {
     display: flex;
     justify-content: center;
-    width: 70%;
+    width: 50%;
+    margin-top: 7%;
 }
 
 @media (max-width: 750px){
     .container{
         width: 100%;
+    }
+}
+
+@media screen and (orientation: portrait){
+    .container{
+        width: 100%;
+        margin-top: 0;
     }
 }
