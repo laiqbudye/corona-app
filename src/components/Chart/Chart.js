@@ -56,7 +56,7 @@ const Chart = ({ data, country }) => {
                 }]
             }}
             options={{
-                legend: {display: false},
+                legend: {display: true},
                 title: {display: true, text: `Daywise Global status`}
             }}
         /> : <i className="fas fa-spinner fa-spin fa-fw fa-5x"></i> 
