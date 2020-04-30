@@ -1,4 +1,4 @@
-import React, { memo, useState } from "react";
+import React, { memo, useState, Fragment } from "react";
 import {
   ZoomableGroup,
   ComposableMap,
@@ -7,7 +7,7 @@ import {
 } from "react-simple-maps";
 
 import { MAP_META } from '../../constants';
-
+import { Typography } from '@material-ui/core';
 
 const MapChart = ({ setTooltipContent, handleCountryChange, countries, stateswisedata, districtwisedata, errorWhileFetching  }) => {
   const [showIndia, setShowIndia] = useState("");
@@ -58,11 +58,24 @@ const MapChart = ({ setTooltipContent, handleCountryChange, countries, stateswis
 
   return (
     <>
+      
       {showIndia || showStateMapOf ? 
-        <button style={{height: '30px', width: '60px', borderRadius: '5px'}} 
+        <Fragment>
+          <button style={{height: '30px', width: '60px', borderRadius: '5px', float:'right'}} 
           onClick={handleButtonClick} type="button">Back
-        </button> : null
+          </button>
+        </Fragment>  : null
       }
+
+      {showIndia ? <Typography color='textSecondary' style={{ marginLeft: '20%' }}>
+                        please click on any state to study it in detail
+                    </Typography> :
+                    showStateMapOf ? null : 
+                    <Typography color='textSecondary' style={{ marginLeft: '20%' }}>
+                        please click on India to study it in detail
+                    </Typography>
+        }
+
         <ComposableMap data-tip="" projectionConfig={showIndia ? 
                       {rotate: [-80.0, -23.0, 0], scale: 800 } 
                       : showStateMapOf ? { scale: 3000 } :{scale: 200}}>
