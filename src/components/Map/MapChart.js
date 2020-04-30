@@ -8,6 +8,7 @@ import {
 
 import { MAP_META } from '../../constants';
 import { Typography } from '@material-ui/core';
+import styles from './Map.module.css';
 
 const MapChart = ({ setTooltipContent, handleCountryChange, countries, stateswisedata, districtwisedata, errorWhileFetching  }) => {
   const [showIndia, setShowIndia] = useState("");
@@ -67,11 +68,11 @@ const MapChart = ({ setTooltipContent, handleCountryChange, countries, stateswis
         </Fragment>  : null
       }
 
-      {showIndia ? <Typography color='textSecondary' style={{ marginLeft: '20%' }}>
+      {showIndia ? <Typography color='textSecondary' className={styles.label}>
                         please click on any state to study it in detail
                     </Typography> :
                     showStateMapOf ? null : 
-                    <Typography color='textSecondary' style={{ marginLeft: '20%' }}>
+                    <Typography color='textSecondary' className={styles.label}>
                         please click on India to study it in detail
                     </Typography>
         }
