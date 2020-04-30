@@ -35,7 +35,8 @@ class App extends React.Component {
 
     if(countrycode === 'global'){
        const fetchedData = await fetchData();
-       this.setState({data: fetchedData})
+       this.setState({data: fetchedData});
+       return;
     } 
     if(!countrycode && statename){  // finding state data
       
