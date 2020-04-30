@@ -26,9 +26,9 @@ const Cards = ({ data }) => {
                                     duration={2.1}  // seconds
                                 /> : <Spinner /> }  
                         </Typography>
-                        <Typography color='textSecondary'>
+                        {/* <Typography color='textSecondary'>
                             LastUpdate: {data?.lastupdatedtime ? data.lastupdatedtime : <Moment format='DD/MM/YYYY hh:mm A'>{moment.utc(Date.now()).local()}</Moment>}
-                        </Typography>
+                        </Typography> */}
                         <Typography variant='body2'>
                             Total number of cases of COVID-19
                         </Typography>
@@ -49,9 +49,9 @@ const Cards = ({ data }) => {
                                 duration = {2.1}  // seconds
                             /> : <Spinner /> }         
                         </Typography>
-                        <Typography color='textSecondary'>
+                        {/* <Typography color='textSecondary'>
                             LastUpdate: {data?.lastupdatedtime ? data.lastupdatedtime : <Moment format='DD/MM/YYYY hh:mm A'>{moment.utc(Date.now()).local()}</Moment>}
-                        </Typography>
+                        </Typography> */}
                         <Typography variant='body2'>
                             Number of recoveries from COVID-19
                         </Typography>
@@ -72,9 +72,9 @@ const Cards = ({ data }) => {
                                 duration = {2.1}  // seconds
                             /> : <Spinner /> }       
                         </Typography>
-                        <Typography color='textSecondary'>
+                        {/* <Typography color='textSecondary'>
                             LastUpdate: {data?.lastupdatedtime ? data.lastupdatedtime : <Moment format='DD/MM/YYYY hh:mm A'>{moment.utc(Date.now()).local()}</Moment>}
-                        </Typography>
+                        </Typography> */}
                         <Typography variant='body2'>
                             Number of deaths caused by COVID-19
                         </Typography>
@@ -95,9 +95,9 @@ const Cards = ({ data }) => {
                                 duration = {2.1}  // seconds
                             /> : <Spinner /> }        
                         </Typography>
-                        <Typography color='textSecondary'>
+                        {/* <Typography color='textSecondary'>
                             LastUpdate: {data?.lastupdatedtime ? data.lastupdatedtime : <Moment format='DD/MM/YYYY hh:mm A'>{moment.utc(Date.now()).local()}</Moment>}
-                        </Typography>
+                        </Typography> */}
                         <Typography variant='body2'>
                             Number of active cases of COVID-19
                         </Typography>
