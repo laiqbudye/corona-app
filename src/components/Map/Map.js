@@ -4,26 +4,27 @@ import ReactTooltip from "react-tooltip";
 import styles from "./Map.module.css";
 import MapChart from "./MapChart";
 
-const Map = ({ handleCountryChange, countries, stateswisedata, errorWhileFetching }) => {
+const Map = ({ handleCountryChange, countries, stateswisedata, districtwisedata, errorWhileFetching }) => {
   const [content, setContent] = useState("");
   return (
     <div className={styles.mapcontainer}>
       <MapChart
         countries={countries}
         stateswisedata={stateswisedata}
+        districtwisedata={districtwisedata}
         handleCountryChange={handleCountryChange}
         setTooltipContent={setContent}
         errorWhileFetching={errorWhileFetching}
       />
       <ReactTooltip>
-        {content && (content.title || content.state) && (
+        {content && (content.title || content.state || content.district) && (
           <div className={styles.tooltipcontainer}>
             <div className={styles.image}>
               <img
                 src={`https://www.countryflags.io/${content.code ? content.code : 'IN'}/flat/64.png`}
                 alt={content.code}
               />
-              <h2>{content.title ? content.title : content.state}</h2>
+              <h2>{content.title ? content.title : content.state || content.district}</h2>
             </div>
             <span>
             <i style={{color: "rgba(0,0,255,0.5)", width: '25px'}} className="fas fa-clinic-medical"></i>
@@ -38,7 +39,7 @@ const Map = ({ handleCountryChange, countries, stateswisedata, errorWhileFetchin
             <span>
               <i style={{color: "rgba(255,0,0.5)", width: '25px'}} className="fas fa-skull-crossbones"></i>
               <strong>Total Deaths: </strong>
-              {new Intl.NumberFormat('en-IN').format(content?.total_deaths ? content.total_deaths : content.deaths)}
+              {new Intl.NumberFormat('en-IN').format(content?.total_deaths ? content.total_deaths : content.deaths || (content?.deceased ? content.deceased : 0))}
             </span>
             <span>
               <i style={{color: "rgba(239,255,0,0.5)", width: '25px'}} className="fas fa-procedures"></i>

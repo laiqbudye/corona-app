@@ -6,38 +6,66 @@ import {
   Geography
 } from "react-simple-maps";
 
-  // let geoUrl = showIndia ? "https://www.covid19india.org/maps/india.json" :
-  // "https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json";
+import { MAP_META } from '../../constants';
 
-const MapChart = ({ setTooltipContent, handleCountryChange, countries, stateswisedata, errorWhileFetching  }) => {
+
+const MapChart = ({ setTooltipContent, handleCountryChange, countries, stateswisedata, districtwisedata, errorWhileFetching  }) => {
   const [showIndia, setShowIndia] = useState("");
-  
-  let geoUrl = showIndia ? "https://www.covid19india.org/maps/india.json" :
-  "https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json";
+  const [showStateMapOf, setShowStateMapOf] = useState("");
 
-  function getData(countrycode, statename) {
+  let geoUrl = showIndia ? MAP_META.India.geoDataFile
+  : showStateMapOf ? MAP_META[showStateMapOf].geoDataFile
+  : MAP_META.World.geoDataFile;
+
+  
+  function getData(countrycode, statename, districtname) {
     if(countrycode){
     const data = countries.filter((country) => country.code === countrycode);
     return data[0];
     }
     if(statename){
+      if(statename === 'JAMMU & KASHMIR'){
+        statename = 'Jammu and Kashmir'
+      }
+      if(districtname){
+        let currentState = districtwisedata.filter(state => state.state === statename);
+        let data = currentState[0].districtData.filter(district => district.district === districtname);
+
+        if(data.length === 0){   // if distric not found in data, then it must be clean district (no one infected there)
+          data = [{
+            active: 0,
+            confirmed: 0,
+            deceased: 0,
+            district: districtname,
+            recovered: 0
+          }]
+        }
+        return data[0];
+      }
     const data = stateswisedata.filter(state => state.state === statename)
     return data[0];
     }
   }
 
    const handleButtonClick = () => {
-    setShowIndia(false);
+     if(showStateMapOf){
+      setShowStateMapOf(false);
+      setShowIndia(true);
+      return;
+     }
+     setShowIndia(false);
   }
 
   return (
     <>
-      {showIndia ? 
+      {showIndia || showStateMapOf ? 
         <button style={{height: '30px', width: '60px', borderRadius: '5px'}} 
           onClick={handleButtonClick} type="button">Back
         </button> : null
       }
-      <ComposableMap data-tip="" projectionConfig={showIndia ? {rotate: [-80.0, -23.0, 0], scale: 800 } : {scale: 200}}>
+        <ComposableMap data-tip="" projectionConfig={showIndia ? 
+                      {rotate: [-80.0, -23.0, 0], scale: 800 } 
+                      : showStateMapOf ? { scale: 3000 } :{scale: 200}}>
         <ZoomableGroup>
           <Geographies geography={geoUrl}>
             {({ geographies }) =>
@@ -49,11 +77,15 @@ const MapChart = ({ setTooltipContent, handleCountryChange, countries, stateswis
                     if(geo.properties.ISO_A2 === 'IN'){
                       setShowIndia(true);
                     }
+                    if(geo.properties.st_nm){
+                      setShowIndia(false);
+                      setShowStateMapOf(geo.properties.st_nm);
+                    }
                   }}
                   onMouseEnter={() => {
-                    const { ISO_A2, st_nm } = geo.properties;
-                    handleCountryChange(ISO_A2, st_nm);
-                    setTooltipContent(getData(ISO_A2, st_nm));
+                    const { ISO_A2, st_nm, district} = geo.properties;
+                    handleCountryChange(ISO_A2, st_nm, district);
+                    setTooltipContent(getData(ISO_A2, st_nm, district));
                   }}
                   onMouseLeave={() => {
                     setTooltipContent("");

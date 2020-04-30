@@ -64,10 +64,10 @@ const Cards = ({ data }) => {
                         <i style={{color: "rgba(255,0,0.5)", width: '25px'}} className="fas fa-skull-crossbones"></i>{' '}Deaths
                         </Typography>
                         <Typography variant='h5'>
-                        {data?.total_deaths >= 0 || data?.deaths >= 0 ?
+                        {data?.total_deaths >= 0 || data?.deaths >= 0 || data?.deceased >= 0 ?
                             <CountUp 
                                 start = {0}
-                                end = {data.total_deaths ? data.total_deaths : data.deaths ? data.deaths : 0}
+                                end = {data.total_deaths ? data.total_deaths : (data.deaths || data.deceased) ? (data.deaths || data.deceased) : 0}
                                 separator = ','
                                 duration = {2.1}  // seconds
                             /> : <Spinner /> }       

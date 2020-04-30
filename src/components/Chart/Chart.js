@@ -22,7 +22,7 @@ const Chart = ({ data, country }) => {
                     datasets: [{
                         data: [data.total_cases ? data.total_cases : data.confirmed, 
                                data.total_recovered ? data.total_recovered : data.recovered, 
-                               data.total_deaths ? data.total_deaths : data.deaths, 
+                               data.total_deaths ? data.total_deaths : data.deaths || data.deceased, 
                                data.total_active_cases ? data.total_active_cases : data.active],
                         label: 'People',
                         backgroundColor: ['rgba(0,0,255,0.5)', 'rgba(0,255,0,0.5)', 'rgba(255,0,0,0.5)', 'rgba(239,255,0,0.5)']
@@ -30,7 +30,7 @@ const Chart = ({ data, country }) => {
                 }}
                 options={{
                     legend: {display: false},
-                    title: {display: true, text: `Current status of ${data?.title ? data.title : data.state}`}
+                    title: {display: true, text: `Current status of ${data?.title ? data.title : data.state || data.district}`}
                 }}
             /> : null
            

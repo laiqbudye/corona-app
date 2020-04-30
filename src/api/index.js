@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const url = "https://covid19.mathdro.id/api";  // api to fetch global covid data (daily stats)
 const newUrl = "https://api.thevirustracker.com";  //api to fetch data of all countries 
-const stateUrl = "https://api.covid19india.org/data.json";   //api to fetch dataof all states of India
+const baseUrl = "https://api.covid19india.org";   //api to fetch dataof all states of India
 
 export const fetchData= async () => {
 
@@ -37,11 +37,21 @@ export const fetchCountries= async () => {
 
 export const fetchStates= async () => {
     try {
-        const { data }   = await axios.get(stateUrl);   // destructuring data field only from response
-        console.log(data);
+        const { data }   = await axios.get(`${baseUrl}/data.json`);   // destructuring data field only from response
+        
         return data;    
     } catch (error) {
         console.log(error);
     }
 }
 
+export const fetchDistrictWiseData= async () => {
+    try {
+        const { data }   = await axios.get(`${baseUrl}/v2/state_district_wise.json`);   // destructuring data field only from response
+        console.log(data);
+        
+        return data;    
+    } catch (error) {
+        console.log(error);
+    }
+}
