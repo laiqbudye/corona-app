@@ -92,13 +92,13 @@ const MapChart = ({ setTooltipContent, handleCountryChange, countries, stateswis
                   }}
                   style={{
                     default: {
-                      fill: "rgb(19, 21, 22)",
+                      fill: "#a7f1a7",//rgb(19, 21, 22)",
                       outline: "none",
-                      stroke: "rgb(107, 109, 112)",
+                      stroke: "black",//"rgb(107, 109, 112)",
                       strokeOpacity: "1"
                     },
                     hover: {
-                      fill: "#F53",
+                      fill: "#189a18",//"#F53",
                       outline: "none"
                     },
                     pressed: {
