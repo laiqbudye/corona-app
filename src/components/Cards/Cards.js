@@ -3,8 +3,6 @@ import Spinner from '../Spinner/Spinner';
 import { Card, CardContent, Typography, Grid } from '@material-ui/core';
 import styles from './Cards.module.css';
 import CountUp from 'react-countup';
-import Moment from 'react-moment';
-import moment from 'moment';
 import cx from 'classnames';   // this is to apply two or more classes to div
 
 const Cards = ({ data }) => {

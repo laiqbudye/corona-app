@@ -76,7 +76,7 @@ class App extends React.Component {
     return (
       <Fragment>
       <div className={styles.container}>
-        <img className={styles.image} src={coronaImage} />
+        <img className={styles.image} src={coronaImage} alt='logo' />
         <Cards data={this.state.data}/>             {/* sending fetched data to cards component usning props*/}
         <CountryPicker countries={this.state.countries} handleCountryChange={this.handleCountryChange} />
         <div className={styles.wrapper}>
