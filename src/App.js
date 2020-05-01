@@ -46,7 +46,18 @@ class App extends React.Component {
 
       if(districtname){ // if state is open and user is watching districts
         let currentState = this.state.districtwisedata.filter(state => state.state === statename);
-        const fetchedData = currentState[0].districtData.filter(district => district.district === districtname);
+        let fetchedData = currentState[0].districtData.filter(district => district.district === districtname);
+
+        if(fetchedData.length === 0){   // if distric not found in data, then it must be clean district (no one infected there)
+          fetchedData = [{
+            active: 0,
+            confirmed: 0,
+            deceased: 0,
+            district: districtname,
+            recovered: 0
+          }]
+        }
+
         this.setState({data: fetchedData[0]})
         return;
       }
