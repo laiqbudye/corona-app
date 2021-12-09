@@ -4,6 +4,7 @@
 
 .card{
     margin: 0 2% !important;
+    padding-bottom: 0 !important;
 }
 
 .infected{
@@ -20,6 +21,11 @@
 
 .active{
     border-bottom: 10px solid rgba(239,255,0,0.5);
+}
+
+.lastupdate {
+    margin-top: 15px !important;
+    text-align: right;
 }
 
 @media (max-width: 750px){

@@ -3,6 +3,19 @@
     justify-content: center;
     width: 50%;
     margin-top: 7%;
+    position: relative;
+}
+
+.Bar {
+    margin-top: 10% !important;
+}
+
+.btn {
+    display: flex !important;
+    position: absolute !important;
+    left: 0 !important;
+    color: grey;
+    margin-top: -4% !important;
 }
 
 @media (max-width: 750px){

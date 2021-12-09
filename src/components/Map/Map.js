@@ -4,51 +4,53 @@ import ReactTooltip from "react-tooltip";
 import styles from "./Map.module.css";
 import MapChart from "./MapChart";
 
-const Map = ({ handleCountryChange, countries, stateswisedata, districtwisedata, errorWhileFetching }) => {
-  const [content, setContent] = useState("");
+const Map = ({ handleCountryChange, countryData, countryDataForMap }) => {
+  const [showToolTip, setshowToolTip] = useState(false);
+
   return (
     <div className={styles.mapcontainer}>
       <MapChart
-        countries={countries}
-        stateswisedata={stateswisedata}
-        districtwisedata={districtwisedata}
+        countryData={countryData}
         handleCountryChange={handleCountryChange}
-        setTooltipContent={setContent}
-        errorWhileFetching={errorWhileFetching}
+        setTooltipVisibility={setshowToolTip}
       />
-      <ReactTooltip>
-        {content && (content.title || content.state || content.district) && (
+
+      {showToolTip && <ReactTooltip>
+        {countryData && countryData[0] && (
           <div className={styles.tooltipcontainer}>
             <div className={styles.image}>
               <img
-                src={`https://www.countryflags.io/${content.code ? content.code : 'IN'}/flat/64.png`}
-                alt={content.code}
+                src={`https://flagcdn.com/w40/${countryDataForMap.countryIsoCode}.png`}
+                alt={countryDataForMap.countryName || countryData[0].location}
               />
-              <h2>{content.title ? content.title : content.state || content.district}</h2>
+              <h2>{countryDataForMap.countryName || countryData[0].location}</h2>
             </div>
-            <span>
-            <i style={{color: "rgba(0,0,255,0.5)", width: '25px'}} className="fas fa-clinic-medical"></i>
+            {countryDataForMap.cntryDataNotAvailable ? (<span>
+              <i style={{ color: "rgba(255,0,0.5)", width: '25px' }} className="fas fa-window-close"></i>
+              <strong>Data Not Available</strong>
+            </span>) : countryData && countryData[0] && (<> <span>
+              <i style={{ color: "rgba(0,0,255,0.5)", width: '25px' }} className="fas fa-clinic-medical"></i>
               <strong>Total Cases: </strong>
-              {new Intl.NumberFormat('en-IN').format(content?.total_cases ? content.total_cases : content.confirmed)}
+              {new Intl.NumberFormat('en-IN').format(countryData[0]?.total_cases ? countryData[0].total_cases : 0)}
             </span>
-            <span>
-              <i style={{color: "rgba(0,255,0,0.5)", width: '25px'}} className="fas fa-hospital-user"></i>
-              <strong>Total Recovered: </strong>
-              {new Intl.NumberFormat('en-IN').format(content?.total_recovered ? content.total_recovered : content.recovered)}
-            </span>
-            <span>
-              <i style={{color: "rgba(255,0,0.5)", width: '25px'}} className="fas fa-skull-crossbones"></i>
-              <strong>Total Deaths: </strong>
-              {new Intl.NumberFormat('en-IN').format(content?.total_deaths ? content.total_deaths : content.deaths || (content?.deceased ? content.deceased : 0))}
-            </span>
-            <span>
-              <i style={{color: "rgba(239,255,0,0.5)", width: '25px'}} className="fas fa-procedures"></i>
-              <strong>Total Active: </strong>
-              {new Intl.NumberFormat('en-IN').format(content?.total_active_cases ? content.total_active_cases : content.active)}
-            </span>
+              <span>
+                <i style={{ color: "rgba(0,255,0,0.5)", width: '25px' }} className="fas fa-hospital-user"></i>
+                <strong>Total Vaccinations: </strong>
+                {new Intl.NumberFormat('en-IN').format(countryData[0]?.total_vaccinations ? countryData[0].total_vaccinations : 0)}
+              </span>
+              <span>
+                <i style={{ color: "rgba(255,0,0.5)", width: '25px' }} className="fas fa-skull-crossbones"></i>
+                <strong>Total Deaths: </strong>
+                {new Intl.NumberFormat('en-IN').format(countryData[0]?.total_deaths ? countryData[0].total_deaths : 0)}
+              </span>
+              <span>
+                <i style={{ color: "rgba(239,255,0,0.5)", width: '25px' }} className="fas fa-procedures"></i>
+                <strong>New Active: </strong>
+                {new Intl.NumberFormat('en-IN').format(countryData[0]?.new_cases ? countryData[0].new_cases : 0)}
+              </span> </>)}
           </div>
         )}
-      </ReactTooltip>
+      </ReactTooltip>}
     </div>
   );
 }

@@ -1,72 +1,79 @@
-import React,{Fragment} from 'react';
+import React, { Fragment } from 'react';
 import styles from './App.module.css';
 import Cards from './components/Cards/Cards';
 import Chart from './components/Chart/Chart';
 import CountryPicker from './components/CountryPicker/CountryPicker';
-import { fetchData, fetchCountries, fetchStates, fetchDistrictWiseData } from './api/index';
+import { fetchData, fetchDataByDates } from './api/index';
 import coronaImage from './image/image.png'
 import Map from './components/Map/Map';
 
 class App extends React.Component {
   state = {
-    data: {},
-    countries: [],
-    stateswisedata:[],
-    districtwisedata:[],
-    dailystatusindia: [],
-    country: '',
-    errorWhileFetching: false
+    data: [],
+    countryData: [],
+    countryDataForMap: {
+      countryIsoCode: null,
+      countryName: null,
+      cntryDataNotAvailable: false
+    },
+    covidGlobalDataByDates: [],
+    countryDataByDates: []
   }
 
 
-  async componentDidMount(){  // we can write aync in fron of this function as this is already async function
-    const fetchedData = await fetchData();
-    const fetchedCountries = await fetchCountries();
-    const fetchedStates = await fetchStates();
-    const fetchedDistrictWiseData = await fetchDistrictWiseData();
-    this.setState({data: fetchedData});
-    this.setState({countries: fetchedCountries});
-    this.setState({stateswisedata: fetchedStates?.statewise});
-    this.setState({dailystatusindia: fetchedStates?.cases_time_series});
-    this.setState({districtwisedata: fetchedDistrictWiseData});
+  async componentDidMount() {
+    const fetchedData = await fetchData();  // api is giving data in object
+    this.setState({ data: fetchedData });
+
+    const countryData = this.state.data.filter(country => country[0].location === 'World')
+    this.setState({ countryData: countryData[0] });
+
+    const globaldataByDates = await fetchDataByDates();
+    this.setState({ covidGlobalDataByDates: globaldataByDates });
+
+    const countryDataByDates = this.state.covidGlobalDataByDates.filter(country => country[0].location === 'World')
+    this.setState({ countryDataByDates: countryDataByDates[0][0]['data'] });
   }
 
-  handleCountryChange = async( countrycode, statename, districtname) => {
-
-    if(countrycode === 'global'){
-       const fetchedData = await fetchData();
-       this.setState({data: fetchedData});
-       return;
-    } 
-    if(!countrycode && statename){  // finding state data
-      
-      if(statename === 'JAMMU & KASHMIR'){
-        statename = 'Jammu and Kashmir'
+  handleCountryChange = async (countryName, countryCode) => {
+    this.setState({
+      countryDataForMap: {
+        ...this.state.countryDataForMap,
+        countryName: null,
+        countryIsoCode: null,
+        cntryDataNotAvailable: false,
+        countryDataByDates: []
       }
+    })
 
-      if(districtname){ // if state is open and user is watching districts
-        let currentState = this.state.districtwisedata.filter(state => state.state === statename);
-        let fetchedData = currentState[0].districtData.filter(district => district.district === districtname);
+    const countryData = this.state.data.filter(country => country[0].location === countryName)
 
-        if(fetchedData.length === 0){   // if distric not found in data, then it must be clean district (no one infected there)
-          fetchedData = [{
-            active: 0,
-            confirmed: 0,
-            deceased: 0,
-            district: districtname,
-            recovered: 0
-          }]
+    const countryDataByDates = this.state.covidGlobalDataByDates.filter(country => country[0].location === countryName);
+    
+    if (countryData.length) {
+      this.setState({
+        countryData: countryData[0],
+        countryDataForMap: {
+          ...this.state.countryDataForMap,
+          countryName: countryName,
+          countryIsoCode: countryCode,
+          cntryDataNotAvailable: false
         }
+      })
 
-        this.setState({data: fetchedData[0]})
-        return;
+      if(countryDataByDates.length){
+        this.setState({countryDataByDates: countryDataByDates[0][0]['data']})
       }
-
-      const fetchedData = this.state.stateswisedata.filter(state => state.state === statename)
-      this.setState({data: fetchedData[0]})
-    }else{
-      const fetchedData = this.state.countries.filter(country => country.code === countrycode)
-      this.setState({data: fetchedData[0]})  
+    } else {
+      this.setState({
+        countryDataForMap: {
+          ...this.state.countryDataForMap,
+          countryName: countryName,
+          countryIsoCode: countryCode,
+          cntryDataNotAvailable: true
+        },
+        countryDataByDates: []
+      })
     }
   }
 
@@ -75,21 +82,22 @@ class App extends React.Component {
   render() {
     return (
       <Fragment>
-      <div className={styles.container}>
-        <img className={styles.image} src={coronaImage} alt='logo' />
-        <Cards data={this.state.data}/>             {/* sending fetched data to cards component usning props*/}
-        <CountryPicker countries={this.state.countries} handleCountryChange={this.handleCountryChange} />
-        <div className={styles.wrapper}>
-        <Chart data={this.state.data} country={this.state.country}/>
-      
-        <Map
-          countries={this.state.countries}
-          stateswisedata={this.state.stateswisedata}
-          districtwisedata={this.state.districtwisedata}
-          handleCountryChange={this.handleCountryChange}
-          errorWhileFetching={this.state.errorWhileFetching}
-        />
-        </div>
+        <div className={styles.container}>
+          <img className={styles.image} src={coronaImage} alt='logo' />
+          <Cards countryData={this.state.countryData} />
+          <CountryPicker countriesData={this.state.data} handleCountryChange={this.handleCountryChange} />
+          <div className={styles.wrapper}>
+            <Chart
+              countryData={this.state.countryData}
+              countryDataByDates={this.state.countryDataByDates}
+            />
+
+            <Map
+              countryData={this.state.countryData}
+              handleCountryChange={this.handleCountryChange}
+              countryDataForMap={this.state.countryDataForMap}
+            />
+          </div>
         </div>
       </Fragment>
     )
