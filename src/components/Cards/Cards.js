@@ -39,6 +39,28 @@ const Cards = ({ countryData }) => {
                     </CardContent>
                 </Grid>
 
+                <Grid item component={Card} xs={12} md={2} className={cx(styles.card, styles.infected)}>
+                    <CardContent>
+                        <Typography color='textSecondary' gutterBottom>
+                            <i style={{ color: "rgba(0,0,255,0.5)", width: '25px' }} className="fas fa-clinic-medical"></i> {' '}Predicted Total Cases
+                        </Typography>
+
+                        <Typography variant='h5' gutterBottom style={{width: 'auto'}}>
+                            {countryData && countryData[0]?.total_cases >= 0 ?
+                                <CountUp
+                                    start={0}
+                                    end={150000000}
+                                    separator=','
+                                    duration={2.1}  // seconds
+                                /> : <Spinner />}
+                        </Typography>
+
+                        <Typography variant='body2' gutterBottom>
+                           Predicted Total number of cases of COVID-19
+                        </Typography>
+                    </CardContent>
+                </Grid>
+
                 <Grid item component={Card} xs={12} md={2} className={cx(styles.card, styles.recovered)}>
                     <CardContent>
                         <Typography color='textSecondary' gutterBottom>
@@ -61,6 +83,28 @@ const Cards = ({ countryData }) => {
                     </CardContent>
                 </Grid>
 
+                <Grid item component={Card} xs={12} md={2} className={cx(styles.card, styles.recovered)}>
+                    <CardContent>
+                        <Typography color='textSecondary' gutterBottom>
+                            <i style={{ color: "rgba(0,255,0,0.5)", width: '25px' }} className="fas fa-hospital-user"></i>{' '}Predicted Vaccinations
+                        </Typography>
+
+                        <Typography variant='h5' gutterBottom>
+                            {countryData && countryData[0]?.total_vaccinations >= 0 ?
+                                <CountUp
+                                    start={0}
+                                    end={150000000}
+                                    separator=','
+                                    duration={2.1}  // seconds
+                                /> : <Spinner />}
+                        </Typography>
+             
+                        <Typography variant='body2' gutterBottom>
+                            Predicted Number of vaccinations of COVID-19
+                        </Typography>
+                    </CardContent>
+                </Grid>
+
                 <Grid item component={Card} xs={12} md={2} className={cx(styles.card, styles.deaths)}>
                     <CardContent>
                         <Typography color='textSecondary' gutterBottom>
@@ -70,7 +114,7 @@ const Cards = ({ countryData }) => {
                         <Typography variant='h5' gutterBottom>
                             {countryData && countryData[0]?.total_deaths >= 0 ?
                                 <CountUp
-                                    start={10000000}
+                                    start={0}
                                     end={countryData[0].total_deaths ? countryData[0].total_deaths : 0}
                                     separator=','
                                     duration={2.1}  // seconds
@@ -83,27 +127,28 @@ const Cards = ({ countryData }) => {
                     </CardContent>
                 </Grid>
 
-                <Grid item component={Card} xs={12} md={2} className={cx(styles.card, styles.active)}>
+                <Grid item component={Card} xs={12} md={2} className={cx(styles.card, styles.deaths)}>
                     <CardContent>
                         <Typography color='textSecondary' gutterBottom>
-                            <i style={{ color: "rgba(239,255,0,1)", width: '25px' }} className="fas fa-procedures"></i>{' '}New Cases
+                            <i style={{ color: "rgba(255,0,0.5)", width: '25px' }} className="fas fa-skull-crossbones"></i>{' '}Predicted Deaths
                         </Typography>
 
                         <Typography variant='h5' gutterBottom>
-                            {countryData && countryData[0]?.new_cases >= 0 ?
+                            {countryData && countryData[0]?.total_deaths >= 0 ?
                                 <CountUp
                                     start={0}
-                                    end={countryData[0].new_cases ? countryData[0].new_cases : 0}
+                                    end={150000000}
                                     separator=','
                                     duration={2.1}  // seconds
                                 /> : <Spinner />}
                         </Typography>
-                        
+              
                         <Typography variant='body2' gutterBottom>
-                            Number of new cases of COVID-19
+                            Predicted Number of deaths caused by COVID-19
                         </Typography>
                     </CardContent>
                 </Grid>
+
             </Grid>
             <Typography color='textSecondary' className={styles.lastupdate}>
                             LastUpdated: {countryData[0]?.last_updated_date && moment(countryData[0].last_updated_date).format("DD-MMM-YYYY")}
