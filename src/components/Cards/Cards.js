@@ -11,7 +11,12 @@ const Cards = ({ countryData }) => {
 
     return (
         <div className={styles.container}>
-            <Grid container spacing={3} justify='center'>
+            
+            <Typography className={styles.heading} variant='subtitle2' gutterBottom component="div">
+                Current status of {countryData[0]?.location ? countryData[0]?.location : '###'}
+            </Typography>
+
+            <Grid container spacing={2} justify='center'>
                 <Grid item component={Card} xs={12} md={2} className={cx(styles.card, styles.infected)}>
                     <CardContent>
                         <Typography color='textSecondary' gutterBottom>

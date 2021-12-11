@@ -28,6 +28,10 @@
     text-align: right;
 }
 
+.heading {
+    text-align: center;
+}
+
 @media (max-width: 750px){
     .card{
         margin: 2% 0 !important;
