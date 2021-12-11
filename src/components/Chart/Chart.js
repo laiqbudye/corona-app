@@ -30,38 +30,86 @@ const Chart = ({ countryData, countryDataByDates }) => {
 
     const lineChart = (
         countryDataByDates && countryDataByDates.length >= 0 ?
+            <>
+                <Line
+                    data={{    // two braces, one for using JS code in JSX and second for object 
+                        labels: countryDataByDates.map((data, i) => data.date),
+                        datasets: [{
+                            data: countryDataByDates.map((data) => data?.total_cases),
+                            label: 'Total Infected',
+                            borderColor: 'rgba(0,0,255)',
+                            backgroundColor: 'rgba(0,0,255,0.5)',
+                            fill: true
+                        },
+                        {
+                            data: [150000000],
+                            label: 'Predicted Infected',
+                            borderColor: 'rgba(0,0,255)',
+                            backgroundColor: 'rgba(0,0,255)',
+                            fill: true
+                        }
+                        ]
+                    }}
+                    options={{
+                        legend: { display: true },
+                        title: { display: true, text: `Current status of ${countryData[0]?.location ? countryData[0]?.location : 'country'}` }
+                    }}
+                />
 
-            <Line
-                data={{    // two braces, one for using JS code in JSX and second for object 
-                    labels: countryDataByDates.map((data, i) => data.date),
-                    datasets: [{
-                        data: countryDataByDates.map((data) => data?.total_cases),
-                        label: 'Infected',
-                        borderColor: 'rgba(0,0,255)',
-                        backgroundColor: 'rgba(0,0,255,0.5)',
-                        fill: true
-                    },
-                    {
-                        data: countryDataByDates.map((data) => data?.total_vaccinations),
-                        label: 'Total Vaccinations',
-                        borderColor: 'rgba(0,255,0)',
-                        backgroundColor: 'rgba(0,255,0,0.5)',
-                        fill: true
-                    },
-                    {
-                        data: countryDataByDates.map((data) => data?.total_deaths),
-                        label: 'Deaths',
-                        borderColor: 'rgba(255,0,0)',
-                        backgroundColor: 'rgba(255,0,0,0.5)',
-                        fill: true
-                    }
-                    ]
-                }}
-                options={{
-                    legend: { display: true },
-                    title: { display: true, text: `Current status of ${countryData[0]?.location ? countryData[0]?.location : 'country'}` }
-                }}
-            /> : <i className="fas fa-spinner fa-spin fa-fw fa-5x"></i>
+                <div className={styles.marginBottom} />
+
+                <Line
+                    data={{    // two braces, one for using JS code in JSX and second for object 
+                        labels: countryDataByDates.map((data, i) => data.date),
+                        datasets: [{
+                            data: countryDataByDates.map((data) => data?.total_vaccinations),
+                            label: 'Total Vaccinations',
+                            borderColor: 'rgba(0,255,0)',
+                            backgroundColor: 'rgba(0,255,0,0.5)',
+                            fill: true
+                        },
+                        {
+                            data: [150000000],
+                            label: 'Predicted Total Vaccinations',
+                            borderColor: 'rgba(0,255,0)',
+                            backgroundColor: 'rgba(0,255,0)',
+                            fill: true
+                        }
+                        ]
+                    }}
+                    // options={{
+                    //     legend: { display: true },
+                    //     title: { display: true, text: `Current status of ${countryData[0]?.location ? countryData[0]?.location : 'country'}` }
+                    // }}
+                />
+
+                <div className={styles.marginBottom} />
+
+                <Line
+                    data={{    // two braces, one for using JS code in JSX and second for object 
+                        labels: countryDataByDates.map((data, i) => data.date),
+                        datasets: [{
+                            data: countryDataByDates.map((data) => data?.total_deaths),
+                            label: 'Deaths',
+                            borderColor: 'rgba(255,0,0)',
+                            backgroundColor: 'rgba(255,0,0,0.5)',
+                            fill: true
+                        },
+                        {
+                            data: [150000000],
+                            label: 'Predicted Deaths',
+                            borderColor: 'rgba(255,0,0)',
+                            backgroundColor: 'rgba(255,0,0,0.5)',
+                            fill: true
+                        }
+                        ]
+                    }}
+                    // options={{
+                    //     legend: { display: true },
+                    //     title: { display: true, text: `Current status of ${countryData[0]?.location ? countryData[0]?.location : 'country'}` }
+                    // }}
+                /> </> : <i className="fas fa-spinner fa-spin fa-fw fa-5x"></i>
+
     );
 
 
