@@ -4,8 +4,44 @@ import ReactTooltip from "react-tooltip";
 import styles from "./Map.module.css";
 import MapChart from "./MapChart";
 
-const Map = ({ handleCountryChange, countryData, countryDataForMap }) => {
+const Map = ({ _globalData }) => {
+  const [countryData, setCountryData] = useState([]);
+  const [countryDataForMap, setCountryDataForMap] = useState({
+    countryIsoCode: null,
+    countryName: null,
+    cntryDataNotAvailable: false
+  })
   const [showToolTip, setshowToolTip] = useState(false);
+
+  let globalData = _globalData;
+
+  const handleCountryChange = async (countryName, countryCode) => {
+
+    setCountryDataForMap({
+      countryName: null,
+      countryIsoCode: null,
+      cntryDataNotAvailable: false
+    })
+
+    const countryData = globalData.filter(country => country[0].location === countryName)
+
+    if (countryData.length) {
+      setCountryData(countryData[0])
+
+      setCountryDataForMap({
+        countryName: countryName,
+        countryIsoCode: countryCode,
+        cntryDataNotAvailable: false
+      })
+
+    } else {
+      setCountryDataForMap({
+        countryName: countryName,
+        countryIsoCode: countryCode,
+        cntryDataNotAvailable: true
+      })
+    }
+  }
 
   return (
     <div className={styles.mapcontainer}>

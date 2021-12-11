@@ -9,13 +9,8 @@ import Map from './components/Map/Map';
 
 class App extends React.Component {
   state = {
-    data: [],
+    globalData: [],
     countryData: [],
-    countryDataForMap: {
-      countryIsoCode: null,
-      countryName: null,
-      cntryDataNotAvailable: false
-    },
     covidGlobalDataByDates: [],
     countryDataByDates: []
   }
@@ -23,9 +18,9 @@ class App extends React.Component {
 
   async componentDidMount() {
     const fetchedData = await fetchData();  // api is giving data in object
-    this.setState({ data: fetchedData });
+    this.setState({ globalData: fetchedData });
 
-    const countryData = this.state.data.filter(country => country[0].location === 'World')
+    const countryData = this.state.globalData.filter(country => country[0].location === 'World')
     this.setState({ countryData: countryData[0] });
 
     const globaldataByDates = await fetchDataByDates();
@@ -36,42 +31,20 @@ class App extends React.Component {
   }
 
   handleCountryChange = async (countryName, countryCode) => {
-    this.setState({
-      countryDataForMap: {
-        ...this.state.countryDataForMap,
-        countryName: null,
-        countryIsoCode: null,
-        cntryDataNotAvailable: false,
-        countryDataByDates: []
-      }
-    })
-
-    const countryData = this.state.data.filter(country => country[0].location === countryName)
+    const countryData = this.state.globalData.filter(country => country[0].location === countryName)
 
     const countryDataByDates = this.state.covidGlobalDataByDates.filter(country => country[0].location === countryName);
-    
+
     if (countryData.length) {
       this.setState({
-        countryData: countryData[0],
-        countryDataForMap: {
-          ...this.state.countryDataForMap,
-          countryName: countryName,
-          countryIsoCode: countryCode,
-          cntryDataNotAvailable: false
-        }
+        countryData: countryData[0]
       })
 
-      if(countryDataByDates.length){
-        this.setState({countryDataByDates: countryDataByDates[0][0]['data']})
+      if (countryDataByDates.length) {
+        this.setState({ countryDataByDates: countryDataByDates[0][0]['data'] })
       }
     } else {
       this.setState({
-        countryDataForMap: {
-          ...this.state.countryDataForMap,
-          countryName: countryName,
-          countryIsoCode: countryCode,
-          cntryDataNotAvailable: true
-        },
         countryDataByDates: []
       })
     }
@@ -85,7 +58,7 @@ class App extends React.Component {
         <div className={styles.container}>
           <img className={styles.image} src={coronaImage} alt='logo' />
           <Cards countryData={this.state.countryData} />
-          <CountryPicker countriesData={this.state.data} handleCountryChange={this.handleCountryChange} />
+          <CountryPicker countriesData={this.state.globalData} handleCountryChange={this.handleCountryChange} />
           <div className={styles.wrapper}>
             <Chart
               countryData={this.state.countryData}
@@ -93,9 +66,7 @@ class App extends React.Component {
             />
 
             <Map
-              countryData={this.state.countryData}
-              handleCountryChange={this.handleCountryChange}
-              countryDataForMap={this.state.countryDataForMap}
+              _globalData={this.state.globalData}
             />
           </div>
         </div>
