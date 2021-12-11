@@ -72,7 +72,7 @@ class App extends React.Component {
               <Switch>
                 <Route path="/" exact>
                   <div className={styles.container}>
-                    <img className={styles.image} src={coronaImage} alt='logo' />
+                    {/* <img className={styles.image} src={coronaImage} alt='logo' /> */}
                     <Cards countryData={this.state.countryData} />
                     <CountryPicker countriesData={this.state.globalData} handleCountryChange={this.handleCountryChange} />
 
