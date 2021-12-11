@@ -4,7 +4,11 @@ svg {
   }
 
 .mapcontainer{
-  width: 50%;
+  position: absolute;
+  width: 60%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -46%);
 }
 
 .tooltipcontainer{
