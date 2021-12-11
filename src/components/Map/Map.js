@@ -44,7 +44,7 @@ const Map = ({ _globalData }) => {
   }
 
   return (
-    <div onScroll={()=>console.log("scrolled")} className={styles.mapcontainer}>
+    <div className={styles.mapcontainer}>
       <MapChart
         countryData={countryData}
         handleCountryChange={handleCountryChange}
